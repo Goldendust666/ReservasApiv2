@@ -25,4 +25,44 @@ public class Reserva {
     private Cliente cliente;
     @ManyToOne(targetEntity = Mesa.class)
     private Mesa mesa;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getNumeroPersonas() {
+        return numeroPersonas;
+    }
+
+    public void setNumeroPersonas(int numeroPersonas) {
+        this.numeroPersonas = numeroPersonas;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Mesa mesa) {
+        this.mesa = mesa;
+    }
 }

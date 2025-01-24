@@ -22,4 +22,37 @@ public class Mesa {
     private String descripcion;
     @OneToMany(targetEntity = Reserva.class, mappedBy = "mesa", cascade = CascadeType.ALL)
     private List<Reserva> reservas = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @UniqueElements
+    public int getNumeroMesa() {
+        return numeroMesa;
+    }
+
+    public void setNumeroMesa(@UniqueElements int numeroMesa) {
+        this.numeroMesa = numeroMesa;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 }
