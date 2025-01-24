@@ -25,7 +25,7 @@ private ClienteRepository clienteRepository;
     }
     /**insertar*/
     @PostMapping("/clientes")
-    public ResponseEntity<Cliente> NewEmpleado(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> NewCliente(@RequestBody Cliente cliente) {
         Cliente saveClient = clienteRepository.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveClient);
     }
