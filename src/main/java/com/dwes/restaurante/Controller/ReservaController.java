@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RequestMapping("/reservas")
@@ -63,4 +65,21 @@ public class ReservaController {
         reservaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/disponibles")
+    public ResponseEntity<List<Mesa>> obtenerMesasDisponibles(
+            @RequestParam("fecha") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            @RequestParam("hora") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime hora) {
+
+        // Unimos fecha y hora en LocalDateTime
+        LocalDateTime fechaHora = LocalDateTime.of(fecha, hora);
+
+        System.out.println("Consultando mesas disponibles para: " + fechaHora); // 🛠 Debug
+
+        // Llamamos al servicio con la fecha y hora combinadas
+        List<Mesa> mesasDisponibles = reservaService.obtenerMesasDisponibles(fecha,hora);
+
+        return ResponseEntity.ok(mesasDisponibles);
+    }
+
+
 }

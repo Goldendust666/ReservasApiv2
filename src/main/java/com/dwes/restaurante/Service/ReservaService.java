@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,22 +49,18 @@ public class ReservaService {
                 ))
                 .collect(Collectors.toList());
     }
-    public List<MesaDTO> obtenerMesasDisponibles(String fecha, String hora, int comensales) {
-        LocalDateTime fechaHoraInicio = LocalDateTime.parse(fecha + "T" + hora);
-        LocalDateTime fechaHoraFin = fechaHoraInicio.plusHours(1); // Suponiendo duración de 1h por reserva
+    public List<Mesa> obtenerMesasDisponibles(LocalDate fecha, LocalTime hora) {
+        // 🔹 Combinar fecha y hora en un `LocalDateTime`
+        LocalDateTime fechaHora = LocalDateTime.of(fecha, hora);
 
+        // 🔹 Obtener todas las mesas
         List<Mesa> todasLasMesas = mesaRepository.findAll();
 
-        // Buscar reservas en ese rango de tiempo
-        List<Mesa> mesasOcupadas = reservaRepository.findByFechaBetween(fechaHoraInicio, fechaHoraFin)
-                .stream()
-                .map(Reserva::getMesa)
+        // 🔹 Filtrar solo las mesas que NO están reservadas en ese horario
+        List<Mesa> mesasDisponibles = todasLasMesas.stream()
+                .filter(mesa -> !reservaRepository.existsByMesaIdAndFecha(mesa.getId(), fechaHora))
                 .collect(Collectors.toList());
 
-        // Filtrar mesas disponibles con capacidad suficiente
-        return todasLasMesas.stream()
-                .filter(mesa -> !mesasOcupadas.contains(mesa))
-                .map(mesa -> new MesaDTO(mesa.getId(), mesa.getNumeroMesa(), mesa.getDescripcion()))
-                .collect(Collectors.toList());
+        return mesasDisponibles;
     }
 }
