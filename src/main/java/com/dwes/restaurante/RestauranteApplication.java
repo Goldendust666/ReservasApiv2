@@ -11,3 +11,9 @@ public class RestauranteApplication {
     }
 
 }
+//en el cliente hacemos dia
+//hora mañana select 2:00 ...... 22:00
+//para cuantos opcional
+//mesas
+//boton
+
